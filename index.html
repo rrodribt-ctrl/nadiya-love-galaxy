@@ -3,105 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nadiya Love Galaxy</title>
+  <title>Nadiya Love Universe - Final Adjusted</title>
   <style>
-    :root{
-      --bg1:#05060d;
-      --bg2:#15091f;
-      --text:#f8f2ff;
-      --soft:rgba(255,255,255,.78);
-      --accent1:#ff975c;
-      --accent2:#ff63b8;
-      --accent3:#ffd77b;
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #14081b 0%, #05060b 60%, #010204 100%);
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
     }
-    *{box-sizing:border-box}
-    html,body{
-      margin:0;width:100%;height:100%;overflow:hidden;
-      font-family:Inter,Arial,Helvetica,sans-serif;color:var(--text);
-      background:
-        radial-gradient(circle at 50% 54%, rgba(255,151,92,.42), transparent 12%),
-        radial-gradient(circle at 50% 50%, rgba(255,99,184,.16), transparent 24%),
-        radial-gradient(circle at 50% 50%, rgba(255,215,123,.08), transparent 34%),
-        linear-gradient(180deg,var(--bg1),var(--bg2));
+
+    #scene {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-    #app{position:relative;width:100%;height:100%;overflow:hidden}
-    #scene{position:absolute;inset:0;cursor:grab;user-select:none;touch-action:none}
-    #scene.dragging{cursor:grabbing}
-    .stars,.labels{position:absolute;inset:0;pointer-events:none}
-    .star{
-      position:absolute;border-radius:50%;background:rgba(255,255,255,.95);
-      box-shadow:0 0 10px rgba(255,255,255,.55);animation:twinkle linear infinite;
+
+    .top-note, .bottom-note, .edit-note, .error-box {
+      position: absolute;
+      z-index: 20;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 0 10px rgba(255,255,255,0.15);
+      box-sizing: border-box;
     }
-    @keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.4)}}
-    .label{
-      position:absolute;left:0;top:0;transform:translate(-50%,-50%);
-      white-space:nowrap;padding:6px 11px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);
-      backdrop-filter:blur(8px);letter-spacing:.02em;text-shadow:0 0 8px rgba(255,255,255,.08);
-      box-shadow:0 0 12px rgba(255,255,255,.05), 0 0 24px rgba(255,99,184,.08);
-      will-change:transform,opacity,left,top;
+
+    .top-note {
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(94vw, 980px);
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.62);
+      pointer-events: none;
     }
-    .label::before{content:"✦";margin-right:6px;color:rgba(255,220,140,.95);font-size:.9em}
-    .center-wrap{
-      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:min(30vw,260px);height:min(30vw,260px);min-width:170px;min-height:170px;pointer-events:none;
+
+    .bottom-note {
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(94vw, 900px);
+      text-align: center;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.78);
+      pointer-events: none;
     }
-    .center-glow{
-      position:absolute;inset:0;border-radius:50%;
-      background:
-        radial-gradient(circle at 42% 36%, rgba(255,246,225,.98), rgba(255,210,110,.92) 16%, rgba(255,151,92,.96) 43%, rgba(255,99,184,.54) 72%, rgba(255,99,184,.03) 100%);
-      box-shadow:0 0 28px rgba(255,151,92,.8),0 0 90px rgba(255,99,184,.36),0 0 160px rgba(255,151,92,.22);
-      animation:pulse 5s ease-in-out infinite;
+
+    .edit-note {
+      top: 14px;
+      right: 14px;
+      max-width: 330px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 12px;
+      line-height: 1.45;
+      text-align: left;
+      pointer-events: none;
     }
-    .center-glow::after{
-      content:"";position:absolute;inset:-28px;border-radius:50%;
-      border:1px solid rgba(255,255,255,.06);animation:ringPulse 6s ease-in-out infinite;
+
+    .error-box {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(92vw, 720px);
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(20, 10, 20, 0.92);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+      display: none;
+      text-align: center;
+      line-height: 1.6;
     }
-    @keyframes pulse{0%,100%{transform:scale(.98)}50%{transform:scale(1.04)}}
-    @keyframes ringPulse{0%,100%{opacity:.25;transform:scale(.96)}50%{opacity:.72;transform:scale(1.08)}}
-    .center-core{
-      position:absolute;inset:18%;border-radius:50%;background:rgba(9,10,22,.9);
-      border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;
-      text-align:center;padding:18px;box-shadow:inset 0 0 24px rgba(255,255,255,.04);
+
+    .error-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
     }
-    .center-core h1{
-      margin:0;font-size:clamp(1.1rem,2.3vw,1.8rem);line-height:1.15;letter-spacing:.08em;text-transform:uppercase
-    }
-    .top-note,.bottom-note{
-      position:absolute;left:50%;transform:translateX(-50%);width:min(94vw,900px);text-align:center;pointer-events:none;
-    }
-    .top-note{
-      top:14px;font-size:12px;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.62);
-    }
-    .bottom-note{
-      bottom:14px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);
-      font-size:13px;line-height:1.4;
-    }
-    .edit-note{
-      position:absolute;right:14px;top:14px;padding:10px 12px;border-radius:14px;
-      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.78);
-      font-size:12px;line-height:1.45;max-width:290px;
-    }
-    @media (max-width:760px){
-      .center-wrap{width:min(46vw,240px);height:min(46vw,240px)}
-      .bottom-note{display:none}
-      .edit-note{display:none}
+
+    @media (max-width: 760px) {
+      .bottom-note { display: none; }
+      .edit-note { display: none; }
     }
   </style>
 </head>
 <body>
-<div id="app">
-  <div class="stars" id="stars"></div>
-  <div class="top-note">Drag with the mouse to rotate around Nadiya • Wheel to zoom</div>
+  <canvas id="scene"></canvas>
 
-  <div id="scene">
-    <div class="labels" id="labels"></div>
-    <div class="center-wrap">
-      <div class="center-glow"></div>
-      <div class="center-core"><h1 id="centerName">Nadiya</h1></div>
-    </div>
-  </div>
+  <div class="top-note">TRUE 3D UNIVERSE • DRAG TO ROTATE • SCROLL TO ZOOM</div>
 
   <div class="edit-note">
     Edit only 2 parts in the code:<br>
@@ -109,168 +111,464 @@
     <b>const LOVE_ITEMS</b>
   </div>
 
-  <div class="bottom-note">A galaxy made of everything I love about you.</div>
-</div>
+  <div class="bottom-note">A true 3D love universe, with Nadiya as the center of gravity.</div>
 
-<script>
-const CENTER_NAME = "Nadiya";
+  <div class="error-box" id="errorBox">
+    <strong>The 3D scene could not load.</strong>
+    This version needs internet access to load the 3D library from a CDN.<br>
+    If you open it from GitHub Pages, it should work normally.
+  </div>
 
-const LOVE_ITEMS = [
-  "I love Your smile",
-  "I love the gesture you make with your lips",
-  "I miss the first time i hugged you",
-  "I remember the first kiss i gave you in my car",
-  "I remember when you hugged me on the last route.",
-  "You are the only one who knows my secret about the staging papers",
-  "Allways i miss ur Legs, i loved",
-  "The photo you sent me is in my head all the time",
-  "I love ur lips"
-];
+  <script>
+    window.addEventListener("error", function() {
+      var box = document.getElementById("errorBox");
+      if (box) box.style.display = "block";
+    });
+  </script>
 
-const starsEl = document.getElementById("stars");
-const labelsEl = document.getElementById("labels");
-const centerNameEl = document.getElementById("centerName");
-const scene = document.getElementById("scene");
-centerNameEl.textContent = CENTER_NAME;
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
-let labels = [];
-let points = [];
-let currentRotX = -0.45;
-let currentRotY = 0.65;
-let targetRotX = currentRotX;
-let targetRotY = currentRotY;
-let zoom = 1;
-let dragging = false;
-let lastX = 0;
-let lastY = 0;
+  <script>
+    if (!window.THREE || !THREE.OrbitControls) {
+      document.getElementById("errorBox").style.display = "block";
+    } else {
+      const CENTER_NAME = "NADIYA";
 
-function seeded(index, salt){
-  const x = Math.sin(index * 127.1 + salt * 311.7) * 43758.5453123;
-  return x - Math.floor(x);
-}
-function clamp(value, min, max){ return Math.max(min, Math.min(max, value)); }
+      const LOVE_ITEMS = [
+        "My heart is yours",
+        "You complete me",
+        "You make my heart smile",
+        "I feel connected to you even when i can’t see you",
+        "Your smile lights up my world",
+        "Just hearing your voice makes my day",
+        "I’m counting down the minutes until I can hold you in my arms again",
+        "I love Your smile",
+        "I love the gesture you make with your lips",
+        "I miss the first time i hugged you",
+        "I remember the first kiss i gave you in my car",
+        "I remember when you hugged me on the last route.",
+        "You are the only one who knows my secret about the staging papers",
+        "Allways i miss ur Legs, i loved",
+        "The photo you sent me is in my head all the time",
+        "I love ur lips",
+        "Connected by love"
+      ];
 
-function createStars(){
-  for(let i = 0; i < 180; i++){
-    const s = document.createElement("div");
-    s.className = "star";
-    const size = Math.random() * 2.3 + 1;
-    s.style.width = size + "px";
-    s.style.height = size + "px";
-    s.style.left = Math.random() * 100 + "%";
-    s.style.top = Math.random() * 100 + "%";
-    s.style.opacity = (Math.random() * 0.8 + 0.15).toFixed(2);
-    s.style.animationDuration = (Math.random() * 4 + 2) + "s";
-    s.style.animationDelay = (Math.random() * 4) + "s";
-    starsEl.appendChild(s);
-  }
-}
+      var canvas = document.getElementById("scene");
+      var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
 
-function buildGalaxy(items){
-  labelsEl.innerHTML = "";
-  points = items.map((text, i) => {
-    const n = Math.max(items.length, 1);
-    const t = i / n;
-    const armCount = 4;
-    const arm = i % armCount;
-    const spiralTurns = 5.2;
-    const angle = t * Math.PI * 2 * spiralTurns + arm * (Math.PI * 2 / armCount) + seeded(i, 1) * 0.55;
-    const radius = 110 + t * 340 + seeded(i, 2) * 45;
-    const sphereMix = 0.55 + seeded(i, 6) * 0.45;
-    const x = Math.cos(angle) * radius * sphereMix + (seeded(i, 3) - 0.5) * 34;
-    const z = Math.sin(angle) * radius * sphereMix + (seeded(i, 4) - 0.5) * 34;
-    const y = Math.sin(angle * 1.35) * (80 + t * 60) + (seeded(i, 5) - 0.5) * 70;
-    return { text, x, y, z };
-  });
+      var scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x05060b, 0.0008);
 
-  labels = points.map((p, index) => {
-    const div = document.createElement("div");
-    div.className = "label";
-    div.textContent = p.text;
-    div.style.color = [
-      "rgba(255,255,255,.86)",
-      "rgba(255,226,242,.84)",
-      "rgba(255,237,192,.83)",
-      "rgba(222,236,255,.84)"
-    ][index % 4];
-    labelsEl.appendChild(div);
-    return div;
-  });
-}
+      var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 5000);
+      camera.position.set(0, 70, 320);
 
-function render(){
-  requestAnimationFrame(render);
+      var controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enablePan = false;
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.07;
+      controls.minDistance = 120;
+      controls.maxDistance = 800;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.55;
+      controls.maxPolarAngle = Math.PI - 0.03;
+      controls.minPolarAngle = 0.03;
+      controls.target.set(0, 0, 0);
 
-  if(!dragging){
-    targetRotY += 0.0034;
-    targetRotX += Math.sin(Date.now() * 0.00045) * 0.0008;
-  }
+      scene.add(new THREE.AmbientLight(0xffffff, 0.52));
 
-  currentRotX += (targetRotX - currentRotX) * 0.12;
-  currentRotY += (targetRotY - currentRotY) * 0.12;
+      var keyLight = new THREE.PointLight(0xffb67d, 2.5, 1500);
+      keyLight.position.set(120, 60, 100);
+      scene.add(keyLight);
 
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  const cx = w / 2;
-  const cy = h / 2;
-  const perspective = 980 / zoom;
-  const sinY = Math.sin(currentRotY), cosY = Math.cos(currentRotY);
-  const sinX = Math.sin(currentRotX), cosX = Math.cos(currentRotX);
+      var fillLight = new THREE.PointLight(0xff6dc1, 1.6, 1200);
+      fillLight.position.set(-120, -50, -100);
+      scene.add(fillLight);
 
-  for(let i = 0; i < points.length; i++){
-    const p = points[i];
-    const x1 = p.x * cosY - p.z * sinY;
-    const z1 = p.x * sinY + p.z * cosY;
-    const y2 = p.y * cosX - z1 * sinX;
-    const z2 = p.y * sinX + z1 * cosX;
-    const denom = perspective - z2;
-    const scale = clamp(perspective / Math.max(140, denom), 0.34, 2.45);
-    const sx = cx + x1 * scale;
-    const sy = cy + y2 * scale;
-    const alpha = clamp(0.18 + ((z2 + 500) / 1000) * 0.82, 0.12, 1);
-    const blur = clamp((1 - scale) * 1.25, 0, 1.5);
-    const label = labels[i];
-    label.style.left = sx + "px";
-    label.style.top = sy + "px";
-    label.style.opacity = alpha.toFixed(3);
-    label.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(3)})`;
-    label.style.filter = `blur(${blur.toFixed(2)}px)`;
-    label.style.zIndex = String(Math.round(z2 + 1000));
-  }
-}
+      function makeStars() {
+        var geometry = new THREE.BufferGeometry();
+        var count = 7200;
+        var positions = new Float32Array(count * 3);
 
-scene.addEventListener("pointerdown", (e) => {
-  dragging = true;
-  scene.classList.add("dragging");
-  lastX = e.clientX;
-  lastY = e.clientY;
-  scene.setPointerCapture(e.pointerId);
-});
-scene.addEventListener("pointermove", (e) => {
-  if(!dragging) return;
-  const dx = e.clientX - lastX;
-  const dy = e.clientY - lastY;
-  lastX = e.clientX;
-  lastY = e.clientY;
-  targetRotY += dx * 0.009;
-  targetRotX += dy * 0.009;
-  targetRotX = clamp(targetRotX, -1.35, 1.35);
-});
-function stopDrag(){
-  dragging = false;
-  scene.classList.remove("dragging");
-}
-scene.addEventListener("pointerup", stopDrag);
-scene.addEventListener("pointercancel", stopDrag);
-scene.addEventListener("wheel", (e) => {
-  e.preventDefault();
-  zoom += e.deltaY * 0.0012;
-  zoom = clamp(zoom, 0.72, 1.55);
-}, { passive: false });
+        for (var i = 0; i < count; i++) {
+          var radius = 900 + Math.random() * 1700;
+          var theta = Math.random() * Math.PI * 2;
+          var phi = Math.acos((Math.random() * 2) - 1);
 
-createStars();
-buildGalaxy(LOVE_ITEMS);
-render();
-</script>
+          positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+          positions[i * 3 + 1] = radius * Math.cos(phi);
+          positions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+        }
+
+        geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+        var material = new THREE.PointsMaterial({
+          color: 0xffffff,
+          size: 3.1,
+          transparent: true,
+          opacity: 1.0,
+          sizeAttenuation: true
+        });
+
+        var stars = new THREE.Points(geometry, material);
+        scene.add(stars);
+        return stars;
+      }
+
+      var starField = makeStars();
+
+      function makeCanvasTexture(drawFn, size) {
+        var c = document.createElement("canvas");
+        c.width = size;
+        c.height = size;
+        var ctx = c.getContext("2d");
+        drawFn(ctx, size);
+        var texture = new THREE.CanvasTexture(c);
+        texture.needsUpdate = true;
+        return texture;
+      }
+
+      function makeGlowTexture() {
+        return makeCanvasTexture(function(ctx, size) {
+          var g = ctx.createRadialGradient(size/2, size/2, size*0.05, size/2, size/2, size/2);
+          g.addColorStop(0, "rgba(255,220,160,0.8)");
+          g.addColorStop(0.25, "rgba(255,170,90,0.24)");
+          g.addColorStop(0.5, "rgba(255,80,180,0.16)");
+          g.addColorStop(1, "rgba(255,80,180,0)");
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, size, size);
+        }, 512);
+      }
+
+      function makeGasTexture() {
+        return makeCanvasTexture(function(ctx, size) {
+          var cx = size / 2;
+          var cy = size / 2;
+
+          // Smooth color-only gas layer, no bubble/puff texture
+          var g1 = ctx.createRadialGradient(cx, cy, size * 0.10, cx, cy, size * 0.52);
+          g1.addColorStop(0.00, "rgba(255,210,120,0.00)");
+          g1.addColorStop(0.24, "rgba(255,220,150,0.08)");
+          g1.addColorStop(0.42, "rgba(255,195,105,0.18)");
+          g1.addColorStop(0.62, "rgba(255,160,82,0.20)");
+          g1.addColorStop(0.82, "rgba(255,130,68,0.12)");
+          g1.addColorStop(1.00, "rgba(255,120,60,0.00)");
+          ctx.fillStyle = g1;
+          ctx.fillRect(0, 0, size, size);
+
+          var g2 = ctx.createRadialGradient(cx * 1.03, cy * 0.97, size * 0.16, cx, cy, size * 0.46);
+          g2.addColorStop(0.00, "rgba(255,235,180,0.00)");
+          g2.addColorStop(0.34, "rgba(255,210,130,0.05)");
+          g2.addColorStop(0.56, "rgba(255,175,95,0.10)");
+          g2.addColorStop(0.76, "rgba(255,140,72,0.08)");
+          g2.addColorStop(1.00, "rgba(255,120,60,0.00)");
+          ctx.fillStyle = g2;
+          ctx.fillRect(0, 0, size, size);
+        }, 768);
+      }
+
+      function makeDiskTexture() {
+        return makeCanvasTexture(function(ctx, size) {
+          var cx = size / 2;
+          var cy = size / 2;
+          var inner = size * 0.17;
+          var outer = size * 0.47;
+          var g = ctx.createRadialGradient(cx, cy, inner, cx, cy, outer);
+
+          g.addColorStop(0.00, "rgba(0,0,0,0)");
+          g.addColorStop(0.18, "rgba(0,0,0,0)");
+          g.addColorStop(0.28, "rgba(255,234,180,0.16)");
+          g.addColorStop(0.36, "rgba(255,204,120,0.82)");
+          g.addColorStop(0.50, "rgba(255,130,80,0.98)");
+          g.addColorStop(0.64, "rgba(255,90,185,0.72)");
+          g.addColorStop(0.80, "rgba(255,140,80,0.08)");
+          g.addColorStop(1.00, "rgba(0,0,0,0)");
+
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, size, size);
+
+          for (var i = 0; i < 800; i++) {
+            var angle = Math.random() * Math.PI * 2;
+            var r = inner + Math.random() * (outer - inner);
+            var x = cx + Math.cos(angle) * r;
+            var y = cy + Math.sin(angle) * r;
+            var alpha = 0.02 + Math.random() * 0.14;
+            var rad = 0.8 + Math.random() * 2.6;
+            ctx.beginPath();
+            ctx.fillStyle = "rgba(255," + (130 + Math.floor(Math.random()*90)) + "," + (80 + Math.floor(Math.random()*110)) + "," + alpha + ")";
+            ctx.arc(x, y, rad, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }, 1024);
+      }
+
+      function roundRect(ctx, x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+      }
+
+      function makeTextSprite(text, fontSize, scale, textColor, useBackground, glowAmount, opacity, fontWeight, fontFamily) {
+        fontSize = fontSize || 40;
+        scale = scale || 18;
+        textColor = textColor || "rgba(255,255,255,0.96)";
+        useBackground = useBackground !== false;
+        glowAmount = glowAmount || 12;
+        opacity = (opacity === undefined) ? 1 : opacity;
+        fontWeight = fontWeight || "600";
+        fontFamily = fontFamily || "Arial, Helvetica, sans-serif";
+
+        var measure = document.createElement("canvas");
+        var mctx = measure.getContext("2d");
+        mctx.font = fontWeight + " " + fontSize + "px " + fontFamily;
+        var textWidth = Math.ceil(mctx.measureText(text).width);
+
+        var c = document.createElement("canvas");
+        c.width = textWidth + (useBackground ? 52 : 30);
+        c.height = fontSize + (useBackground ? 42 : 28);
+
+        var ctx = c.getContext("2d");
+        ctx.font = fontWeight + " " + fontSize + "px " + fontFamily;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.globalAlpha = opacity;
+
+        if (useBackground) {
+          ctx.fillStyle = "rgba(255,255,255,0.08)";
+          ctx.strokeStyle = "rgba(255,255,255,0.14)";
+          ctx.lineWidth = 2;
+          roundRect(ctx, 1, 1, c.width - 2, c.height - 2, 24);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        ctx.shadowColor = "rgba(255,228,170,0.42)";
+        ctx.shadowBlur = glowAmount;
+        ctx.fillStyle = textColor;
+        ctx.fillText(text, c.width / 2, c.height / 2 + 1);
+
+        var texture = new THREE.CanvasTexture(c);
+        var material = new THREE.SpriteMaterial({
+          map: texture,
+          transparent: true,
+          depthWrite: false,
+          depthTest: false
+        });
+        var sprite = new THREE.Sprite(material);
+        var ratio = c.width / c.height;
+        sprite.scale.set(scale * ratio, scale, 1);
+        return sprite;
+      }
+
+      var universeGroup = new THREE.Group();
+      scene.add(universeGroup);
+
+      function createBlackHole() {
+        var group = new THREE.Group();
+
+        var outerCore = new THREE.Mesh(
+          new THREE.SphereGeometry(38, 64, 64),
+          new THREE.MeshStandardMaterial({
+            color: 0x050507,
+            roughness: 0.98,
+            metalness: 0.0,
+            emissive: 0x0b0b0d,
+            emissiveIntensity: 0.55
+          })
+        );
+        group.add(outerCore);
+
+        var innerCore = new THREE.Mesh(
+          new THREE.SphereGeometry(28, 48, 48),
+          new THREE.MeshStandardMaterial({
+            color: 0x000000,
+            roughness: 1,
+            metalness: 0,
+            emissive: 0x020202,
+            emissiveIntensity: 0.25
+          })
+        );
+        group.add(innerCore);
+
+        var outerGlow = new THREE.Sprite(
+          new THREE.SpriteMaterial({
+            map: makeGlowTexture(),
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.68,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+          })
+        );
+        outerGlow.scale.set(190, 190, 1);
+        group.add(outerGlow);
+
+        // Subtle yellow/orange gas layer around the core
+        var gasLayer = new THREE.Sprite(
+          new THREE.SpriteMaterial({
+            map: makeGasTexture(),
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.42,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+          })
+        );
+        gasLayer.scale.set(178, 178, 1);
+        group.add(gasLayer);
+
+        var diskMaterial = new THREE.MeshBasicMaterial({
+          map: makeDiskTexture(),
+          transparent: true,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          blending: THREE.AdditiveBlending
+        });
+
+        // Keep the colored horizontal rings
+        var disk = new THREE.Mesh(
+          new THREE.CircleGeometry(108, 128),
+          diskMaterial
+        );
+        disk.rotation.x = Math.PI / 2;
+        group.add(disk);
+
+        var diskBack = new THREE.Mesh(
+          new THREE.CircleGeometry(112, 128),
+          diskMaterial.clone()
+        );
+        diskBack.rotation.x = Math.PI / 2;
+        diskBack.rotation.z = 0.18;
+        diskBack.material.opacity = 0.30;
+        group.add(diskBack);
+
+        // Thin green/gold ring removed on purpose
+
+        // Center name keeps the prettier typeface
+        var nameSprite = makeTextSprite(
+          CENTER_NAME,
+          48,
+          17.2,
+          "rgba(255,244,220,0.98)",
+          false,
+          18,
+          0.98,
+          "700",
+          "Georgia, Times New Roman, serif"
+        );
+        nameSprite.position.set(0, 0, 3.2);
+        group.add(nameSprite);
+
+        group.userData = {
+          outerCore: outerCore,
+          innerCore: innerCore,
+          disk: disk,
+          diskBack: diskBack,
+          outerGlow: outerGlow,
+          gasLayer: gasLayer,
+          nameSprite: nameSprite
+        };
+
+        return group;
+      }
+
+      var blackHoleGroup = createBlackHole();
+      universeGroup.add(blackHoleGroup);
+
+      var labelsGroup = new THREE.Group();
+      universeGroup.add(labelsGroup);
+
+      function rebuildLoveItems() {
+        while (labelsGroup.children.length) {
+          var child = labelsGroup.children[0];
+          labelsGroup.remove(child);
+          if (child.material && child.material.map) child.material.map.dispose();
+          if (child.material) child.material.dispose();
+        }
+
+        for (var i = 0; i < LOVE_ITEMS.length; i++) {
+          var colors = [
+            "rgba(255,255,255,0.96)",
+            "rgba(255,228,243,0.95)",
+            "rgba(255,240,193,0.95)",
+            "rgba(224,236,255,0.95)"
+          ];
+
+          // Qualities/messages return to the previous font style
+          var sprite = makeTextSprite(
+            LOVE_ITEMS[i],
+            32,
+            14 + Math.random() * 2.5,
+            colors[i % 4],
+            true,
+            12,
+            1,
+            "600",
+            "Arial, Helvetica, sans-serif"
+          );
+
+          var n = LOVE_ITEMS.length;
+          var t = i / Math.max(1, n);
+          var armCount = 4;
+          var arm = i % armCount;
+          var spiralTurns = 4.9;
+          var angle = t * Math.PI * 2 * spiralTurns + arm * (Math.PI * 2 / armCount) + Math.sin(i * 17.11) * 0.35;
+          var radius = 115 + t * 230 + ((Math.sin(i * 5.13) * 0.5 + 0.5) * 26);
+          var sphereMix = 0.58 + ((Math.cos(i * 3.77) * 0.5 + 0.5) * 0.42);
+
+          var x = Math.cos(angle) * radius * sphereMix;
+          var z = Math.sin(angle) * radius * sphereMix;
+          var y = Math.sin(angle * 1.25) * (68 + t * 62) + Math.cos(i * 2.7) * 18;
+
+          sprite.position.set(x, y, z);
+          labelsGroup.add(sprite);
+        }
+      }
+
+      rebuildLoveItems();
+
+      var clock = new THREE.Clock();
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        var t = clock.getElapsedTime();
+
+        starField.rotation.y += 0.00028;
+
+        blackHoleGroup.userData.disk.rotation.z += 0.009;
+        blackHoleGroup.userData.diskBack.rotation.z -= 0.005;
+        blackHoleGroup.userData.outerGlow.material.opacity = 0.58 + Math.sin(t * 1.7) * 0.08;
+        blackHoleGroup.userData.gasLayer.material.opacity = 0.34 + Math.sin(t * 1.2) * 0.04;
+        blackHoleGroup.userData.gasLayer.material.rotation += 0.0012;
+        blackHoleGroup.rotation.y += 0.0013;
+        blackHoleGroup.rotation.z = Math.sin(t * 0.4) * 0.05;
+
+        blackHoleGroup.userData.nameSprite.quaternion.copy(camera.quaternion);
+
+        controls.update();
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      window.addEventListener("resize", function() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    }
+  </script>
 </body>
 </html>
